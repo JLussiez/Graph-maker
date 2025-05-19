@@ -172,7 +172,7 @@ function saveGraph() {
     }
     
     localStorage.setItem('savedGraphs', JSON.stringify(graphs));
-    window.location.href = 'index.html';
+    window.location.href = './index.html';
 }
 
 // Initialisation
