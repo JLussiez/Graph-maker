@@ -12,40 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         savedGraphs.innerHTML = graphs.map((graph, index) => `
             <div class="graph-card">
+                <div class="graph-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2a10 10 0 0 1 0 20"/>
+                        <path d="M12 2a10 10 0 0 0 0 20"/>
+                    </svg>
+                </div>
                 <h3>${graph.title}</h3>
-                <canvas id="graph-${index}"></canvas>
                 <div class="actions">
                     <a href="create.html?id=${index}" class="btn secondary">Modifier</a>
                     <button onclick="deleteGraph(${index})" class="btn primary">Supprimer</button>
                 </div>
             </div>
         `).join('');
-        
-        // Créer les graphiques
-        graphs.forEach((graph, index) => {
-            const ctx = document.getElementById(`graph-${index}`).getContext('2d');
-            new Chart(ctx, {
-                type: graph.type,
-                data: {
-                    labels: graph.labels,
-                    datasets: [{
-                        label: graph.title,
-                        data: graph.values,
-                        backgroundColor: graph.colors.map(color => `${color}80`),
-                        borderColor: graph.colors,
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        });
     }
     
     // Supprimer un graphique

@@ -20,14 +20,17 @@
                 <label for="graphTitle">Titre du graphique:</label>
                 <input type="text" id="graphTitle" value="Mon Graphique">
             </div>
-            
-            <div class="input-group">
-                <label for="graphType">Type de graphique:</label>
-                <select id="graphType">
-                    <option value="bar">Barres</option>
-                    <option value="line">Ligne</option>
-                    <option value="pie">Camembert</option>
-                </select>
+
+            <div class="categories-section" id="categoriesSection">
+                <h3>Catégories</h3>
+                <div id="categoriesContainer">
+                    <div class="category-row">
+                        <input type="text" placeholder="Nom de la catégorie" class="category-input">
+                        <input type="color" class="category-color" value="#4CAF50">
+                        <button class="remove-btn category-remove">×</button>
+                    </div>
+                </div>
+                <button id="addCategoryBtn" class="btn secondary">Ajouter une catégorie</button>
             </div>
 
             <div class="data-input">
@@ -37,6 +40,9 @@
                         <input type="text" placeholder="Label" class="label-input">
                         <input type="number" placeholder="Valeur" class="value-input">
                         <input type="color" class="color-input" value="#4CAF50">
+                        <select class="category-select">
+                            <option value="">Sélectionner une catégorie</option>
+                        </select>
                         <button class="remove-btn">×</button>
                     </div>
                 </div>
@@ -48,8 +54,14 @@
             </div>
         </div>
 
-        <div class="chart-container">
-            <canvas id="myChart"></canvas>
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="chart-container" id="categoryChartContainer">
+                <h3>Récapitulatif par catégorie</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
         </div>
     </div>
     <script src="create.js"></script>
