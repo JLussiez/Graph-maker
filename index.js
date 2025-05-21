@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <h3>${graph.title}</h3>
                 <div class="actions">
+                    <a href="view.html?id=${index}" class="btn secondary">Voir</a>
                     <a href="create.html?id=${index}" class="btn secondary">Modifier</a>
                     <button onclick="deleteGraph(${index})" class="btn primary">Supprimer</button>
                 </div>

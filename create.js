@@ -41,6 +41,23 @@ function createDataRow(label = '', value = '', color = '#4CAF50', category = '')
         row.remove();
         updateCharts();
     });
+
+    // Mettre à jour les sélecteurs de catégories
+    const select = row.querySelector('.category-select');
+    const categories = getCategories();
+    
+    categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.name;
+        option.textContent = cat.name;
+        option.style.color = cat.color;
+        select.appendChild(option);
+    });
+
+    // Définir la catégorie sélectionnée après avoir ajouté toutes les options
+    if (category) {
+        select.value = category;
+    }
     
     return row;
 }
@@ -267,18 +284,19 @@ function saveGraph() {
     const labels = [];
     const values = [];
     const colors = [];
-    const categories = [];
+    const selectedCategories = [];
+    const definedCategories = [];
     
-    // Sauvegarder les catégories
+    // Sauvegarder les catégories définies
     document.querySelectorAll('.category-row').forEach(row => {
         const name = row.querySelector('.category-input').value;
         const color = row.querySelector('.category-color').value;
         if (name) {
-            categories.push({ name, color });
+            definedCategories.push({ name, color });
         }
     });
     
-    // Sauvegarder les données
+    // Sauvegarder les données avec leurs catégories sélectionnées
     document.querySelectorAll('.data-row').forEach(row => {
         const label = row.querySelector('.label-input').value;
         const value = parseFloat(row.querySelector('.value-input').value);
@@ -289,6 +307,7 @@ function saveGraph() {
             labels.push(label);
             values.push(value);
             colors.push(color);
+            selectedCategories.push(category);
         }
     });
     
@@ -303,7 +322,8 @@ function saveGraph() {
         labels,
         values,
         colors,
-        categories
+        definedCategories,
+        selectedCategories
     };
     
     const graphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
@@ -349,9 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('graphTitle').value = graph.title;
             
             // Charger les catégories
-            if (graph.categories) {
+            if (graph.definedCategories) {
                 categoriesContainer.innerHTML = '';
-                graph.categories.forEach(category => {
+                graph.definedCategories.forEach(category => {
                     categoriesContainer.appendChild(createCategoryRow(category.name, category.color));
                 });
             }
@@ -359,9 +379,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Vider le conteneur de données
             dataContainer.innerHTML = '';
             
-            // Ajouter les données existantes
+            // Ajouter les données existantes avec leurs catégories
             graph.labels.forEach((label, index) => {
-                dataContainer.appendChild(createDataRow(label, graph.values[index], graph.colors[index]));
+                const row = createDataRow(
+                    label, 
+                    graph.values[index], 
+                    graph.colors[index], 
+                    graph.selectedCategories[index]
+                );
+                dataContainer.appendChild(row);
             });
             
             // Mettre à jour les sélecteurs de catégories
