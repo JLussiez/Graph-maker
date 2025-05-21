@@ -159,24 +159,52 @@ function updateMainChart(labels, values, colors, title) {
                 data: values,
                 backgroundColor: colors.map(color => `${color}80`),
                 borderColor: colors,
-                borderWidth: 2
+                borderWidth: 2,
+                hoverOffset: 15,
+                hoverBorderWidth: 3
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
                     text: title,
                     font: {
-                        size: 16,
-                        weight: 'bold'
+                        size: 20,
+                        weight: 'bold',
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 20
                     }
                 },
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        font: {
+                            size: 12,
+                            family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                        },
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    titleFont: {
+                        size: 14,
+                        weight: 'bold',
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
+                    bodyFont: {
+                        size: 13,
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
                     callbacks: {
                         label: function(context) {
                             const value = context.raw;
@@ -186,9 +214,11 @@ function updateMainChart(labels, values, colors, title) {
                     }
                 },
                 datalabels: {
-                    color: '#000',
+                    color: '#fff',
                     font: {
-                        weight: 'bold'
+                        weight: 'bold',
+                        size: 12,
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
                     },
                     formatter: function(value) {
                         const percentage = ((value / total) * 100).toFixed(1);
@@ -198,6 +228,12 @@ function updateMainChart(labels, values, colors, title) {
                         return context.dataset.data[context.dataIndex] > 0;
                     }
                 }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 1000,
+                easing: 'easeOutQuart'
             }
         }
     });
@@ -234,24 +270,52 @@ function updateCategoryChart(categoryData, title) {
                 data: categoryValues,
                 backgroundColor: categoryColors.map(color => `${color}80`),
                 borderColor: categoryColors,
-                borderWidth: 2
+                borderWidth: 2,
+                hoverOffset: 15,
+                hoverBorderWidth: 3
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
                     text: 'Récapitulatif par catégorie',
                     font: {
-                        size: 16,
-                        weight: 'bold'
+                        size: 20,
+                        weight: 'bold',
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 20
                     }
                 },
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        font: {
+                            size: 12,
+                            family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                        },
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    titleFont: {
+                        size: 14,
+                        weight: 'bold',
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
+                    bodyFont: {
+                        size: 13,
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+                    },
                     callbacks: {
                         label: function(context) {
                             const value = context.raw;
@@ -261,9 +325,11 @@ function updateCategoryChart(categoryData, title) {
                     }
                 },
                 datalabels: {
-                    color: '#000',
+                    color: '#fff',
                     font: {
-                        weight: 'bold'
+                        weight: 'bold',
+                        size: 12,
+                        family: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
                     },
                     formatter: function(value) {
                         const percentage = ((value / total) * 100).toFixed(1);
@@ -273,6 +339,12 @@ function updateCategoryChart(categoryData, title) {
                         return context.dataset.data[context.dataIndex] > 0;
                     }
                 }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 1000,
+                easing: 'easeOutQuart'
             }
         }
     });

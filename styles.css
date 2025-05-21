@@ -321,11 +321,25 @@ select:focus {
 
 .chart-container {
     margin-top: 2rem;
-    padding: 1.5rem;
+    padding: 2rem;
     background-color: var(--card-background);
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-sm);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
+    height: 500px;
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .save-controls {
@@ -383,13 +397,6 @@ select:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.charts-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -397,7 +404,8 @@ select:focus {
     }
     
     .chart-container {
-        padding: 1rem;
+        height: 400px;
+        padding: 1.5rem;
     }
     
     .header {
