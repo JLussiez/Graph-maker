@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const savedGraphs = document.getElementById('savedGraphs');
+    const exportBtn = document.getElementById('exportBtn');
+    const importInput = document.getElementById('importInput');
     
     // Charger les graphiques sauvegardés
     function loadSavedGraphs() {
@@ -12,22 +14,75 @@ document.addEventListener('DOMContentLoaded', () => {
         
         savedGraphs.innerHTML = graphs.map((graph, index) => `
             <div class="graph-card">
-                <div class="graph-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 2a10 10 0 0 1 0 20"/>
-                        <path d="M12 2a10 10 0 0 0 0 20"/>
-                    </svg>
-                </div>
                 <h3>${graph.title}</h3>
-                <div class="actions">
-                    <a href="view.html?id=${index}" class="btn secondary">Voir</a>
-                    <a href="create.html?id=${index}" class="btn secondary">Modifier</a>
-                    <button onclick="deleteGraph(${index})" class="btn primary">Supprimer</button>
+                <div class="actions actions-centered">
+                    <a href="view.html?id=${index}" class="btn btn-flat">Voir</a>
+                    <a href="create.html?id=${index}" class="btn btn-flat">Modifier</a>
+                    <button onclick="deleteGraph(${index})" class="btn btn-flat btn-danger">Supprimer</button>
                 </div>
             </div>
         `).join('');
     }
+    
+    // Exporter les graphiques
+    exportBtn.addEventListener('click', () => {
+        const graphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
+        if (graphs.length === 0) {
+            alert('Aucun graphique à exporter.');
+            return;
+        }
+        
+        const dataStr = JSON.stringify(graphs, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        
+        const exportFileDefaultName = 'graphiques.json';
+        
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    });
+    
+    // Importer des graphiques
+    importInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedGraphs = JSON.parse(e.target.result);
+                
+                // Vérifier que les données importées sont valides
+                if (!Array.isArray(importedGraphs)) {
+                    throw new Error('Format de fichier invalide');
+                }
+                
+                // Vérifier la structure de chaque graphique
+                importedGraphs.forEach(graph => {
+                    if (!graph.title || !graph.labels || !graph.values || !graph.colors) {
+                        throw new Error('Structure de graphique invalide');
+                    }
+                });
+                
+                // Demander confirmation avant de fusionner
+                if (confirm(`Voulez-vous importer ${importedGraphs.length} graphique(s) ?`)) {
+                    const currentGraphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
+                    const mergedGraphs = [...currentGraphs, ...importedGraphs];
+                    localStorage.setItem('savedGraphs', JSON.stringify(mergedGraphs));
+                    loadSavedGraphs();
+                    alert('Importation réussie !');
+                }
+            } catch (error) {
+                alert('Erreur lors de l\'importation : ' + error.message);
+            }
+            
+            // Réinitialiser l'input
+            event.target.value = '';
+        };
+        
+        reader.readAsText(file);
+    });
     
     // Supprimer un graphique
     window.deleteGraph = (index) => {

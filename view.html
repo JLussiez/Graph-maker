@@ -23,6 +23,36 @@
                 <canvas id="categoryChart"></canvas>
             </div>
         </div>
+        <div class="tables-container">
+            <div class="table-section">
+                <h3>Données détaillées</h3>
+                <table class="recap-table" id="mainDataTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="label">Libellé <span class="sort-emoji"></span></th>
+                            <th data-sort="value">Valeur <span class="sort-emoji"></span></th>
+                            <th data-sort="percent">% <span class="sort-emoji"></span></th>
+                            <th>Couleur</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="table-section">
+                <h3>Récapitulatif par catégorie</h3>
+                <table class="recap-table" id="categoryDataTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="label">Catégorie <span class="sort-emoji"></span></th>
+                            <th data-sort="value">Total <span class="sort-emoji"></span></th>
+                            <th data-sort="percent">% <span class="sort-emoji"></span></th>
+                            <th>Couleur</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <script src="view.js"></script>
 </body>

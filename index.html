@@ -11,7 +11,12 @@
         <h1>Gestionnaire de Graphiques</h1>
         
         <div class="actions">
-            <a href="create.html" class="btn primary">Créer un nouveau graphique</a>
+            <a href="create.html" class="btn primary">Créer un graphique</a>
+            <div class="import-export">
+                <button id="exportBtn" class="btn secondary">Exporter tous les graphiques</button>
+                <label for="importInput" class="btn secondary">Importer des graphiques</label>
+                <input type="file" id="importInput" accept=".json" style="display: none;">
+            </div>
         </div>
 
         <div class="graphs-list">
